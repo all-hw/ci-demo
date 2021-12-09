@@ -36,7 +36,7 @@ task_status() {
 }
 
 create_task() {
-    curl -s -X POST -F firmware=@$P_2 -F input=@$P_3 $VERBOSE "$REST/usertask?version=V3&rate=$BAUDRATE&log=$LOG&timeout=$TIMEOUT&key=$API_KEY"
+    curl -s -X POST -F firmware=@$P_2 -F input=@$P_3 $VERBOSE "$REST/usertask?version=V3&rate=$BAUDRATE&log=$LOG&timeout=$TIMEOUT&key=$API_KEY&core=M55_0"
     echo
 }
 

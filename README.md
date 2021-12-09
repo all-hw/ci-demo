@@ -134,10 +134,23 @@ We are flashing the firmware binary from *bin/HelloW.axf* file and passing conte
 
 `7b00ab0c-8566-46ae-ada8-45bc2bdc81d4`
 
-It is a task GUID, you can use it to get the status of the operation:
+It is a task UUID, you can use it to get the status of the operation:
 
 ```bash
 ./scripts/ci_sample.sh status 7b00ab0c-8566-46ae-ada8-45bc2bdc81d4
+```
+
+The result should be following:
+```text
+Status: finished
+Exit code: 156
+UART output:
+
+-- Remote service test application - echo test --
+test1...
+test2...
+test3...
+Hello World!!!
 ```
 
 
