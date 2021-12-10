@@ -1,5 +1,7 @@
 # Access All-Hardware Service in Your CI Workflow
 
+> This document contains a guide of running firmware on remote device as part of the CI process.
+
 CI/CD techniques are coming to the embedded world and now [All-Hardware](https://all-hw.com/) service is enabling the remote access to the newest [Ensemble E7](https://www.alifsemi.com/products/) development board as well as others types of popular development [boards](https://all-hw.com/app/index.html#/hardware).
 
 The Ensemble™ processor family is built on the latest generation embedded processing technology that scales from single Arm® Cortex®-M55 microcontrollers (MCUs) to a new class of multi-core devices — fusion processors — that blend up to two Cortex-M55 MCU cores, up to two Cortex-A32 microprocessors (MPU) cores capable of running high-level  operating systems, and up to two Arm Ethos™-U55 microNPUs for AI/ML acceleration.
@@ -33,7 +35,7 @@ Ok, great! Let's flash our simple applications to the cloud hardware.
 
 ## Flash MCU with GitHub CI
 
-With GitHub Actions you can easily build you CI workflow and [All-Hardware](https://all-hw.com/) service will let you to do it for your embeded development process!
+With GitHub Actions you can easily build your CI workflow and [All-Hardware](https://all-hw.com/) service will let you to do it for your embeded development process!
 
 Open [demo GitHub page](https://github.com/all-hw/ci-demo) and fork the repository:
 
@@ -120,7 +122,7 @@ Clone the demo from Github repository:
 git clone https://github.com/all-hw/ci-demo.git
 ```
 
-Modify _$API_KEY_ variable in the file scripts/ci_sampe.sh_ to the API key you've got during booking the board.
+Modify _$API_KEY_ variable in the file _scripts/ci_sampe.sh_ to the API key you've got during booking the board.
 
 ### Echo Application
 
@@ -130,7 +132,7 @@ Run following command to upload the Echo example to the All-Hardware remote boar
 ./scripts/ci_sample.sh task bin/HelloW.axf test_data/uart_input.txt
 ```
 
-We are flashing the firmware binary from *bin/HelloW.axf* file and passing content of the _test_data/uart_input.txt_ file to the microcontroller's uart input. Here is the expected output:
+We are flashing the firmware binary from *bin/HelloW.axf* file and passing content of the _test_data/uart_input.txt_ file to the microcontroller's uart input. Here is the example output:
 
 `7b00ab0c-8566-46ae-ada8-45bc2bdc81d4`
 
@@ -163,8 +165,6 @@ git clone https://github.com/arashed-alif/VHT-TFLmicrospeech
 cd VHT-TFLmicrospeech
 git checkout Platform_Alif_Ensemble
 ```
-
-Follow the instructions [here](https://github.com/arashed-alif/VHT-TFLmicrospeech/tree/Platform_Alif_Ensemble/Platform_Alif_Ensemble) to build the example.
 
 We already built the example so you can just run it on remote hardware. Make sure you've set API_KEY variable as described into previous example, then run following command:
 
