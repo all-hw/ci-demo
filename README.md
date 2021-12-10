@@ -1,6 +1,6 @@
 # Access All-Hardware Service in Your CI Workflow
 
-> This document contains a guide of running firmware on remote device as part of the CI process.
+> This document contains a guide of running firmware on the remote device as part of your CI process.
 
 CI/CD techniques are coming to the embedded world and now [All-Hardware](https://all-hw.com/) service is enabling the remote access to the newest [Ensemble E7](https://www.alifsemi.com/products/) development board as well as others types of popular development [boards](https://all-hw.com/app/index.html#/hardware).
 
