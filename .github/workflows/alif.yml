@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
     inputs:
       binary:
-        description: 'Binary for the task'
+        description: 'Firmware binary to flash to the MCU'
         default: 'bin/HelloW.axf'
         required: true
       file:
@@ -13,11 +13,11 @@ on:
         default: 'test_data/uart_input.txt'
         required: true
       api_key:
-        description: 'API key for the all-hw.com service'
+        description: 'API key for the board on all-hw.com service'
         default: 'ba1e491b-331b-4e35-b799-f714b8505843'
         required: true
       timeout:
-        description: 'Firmware task timeout'
+        description: 'Firmware task timeout before abort'
         default: '10'
         required: true
 

@@ -1,26 +1,26 @@
-# Access All-Hardware Service in Your CI Workflow
+# Access All-Hardware Service in Your CI/CD Workflow
 
-> This document contains a guide of running firmware on the remote device as part of your CI process.
+> This document contains a guide for running firmware on the remote device as part of your CI process.
 
-CI/CD techniques are coming to the embedded world and now [All-Hardware](https://all-hw.com/) service is enabling the remote access to the newest [Ensemble E7](https://www.alifsemi.com/products/) development board as well as others types of popular development [boards](https://all-hw.com/app/index.html#/hardware).
+CI/CD techniques are coming to the embedded world and now the [All-Hardware](https://all-hw.com/) service is enabling remote access to the newest [Ensemble E7](https://www.alifsemi.com/products/) development board as well as other types of popular development [boards](https://all-hw.com/app/index.html#/hardware).
 
-The Ensemble™ processor family is built on the latest generation embedded processing technology that scales from single Arm® Cortex®-M55 microcontrollers (MCUs) to a new class of multi-core devices — fusion processors — that blend up to two Cortex-M55 MCU cores, up to two Cortex-A32 microprocessors (MPU) cores capable of running high-level  operating systems, and up to two Arm Ethos™-U55 microNPUs for AI/ML acceleration.
-
-
-This demo is intended to show how to speed-up the process of the embedded firmware development by automation of the firmware testing on the cloud hardware.
-
-Here we'll run a simple echo application on the single Cortex-M55 core of Ensemble DevKit-E7 development board using the GitHub Actions and by using REST requests wrapped with the shell scripts. Using this guide you can also run your firmware on any other supported [board](https://all-hw.com/app/index.html#/hardware).
+The Ensemble™ processor family is built on the latest generation embedded processing technology that scales from a single Arm® Cortex®-M55 microcontroller (MCU) to a new class of multi-core devices — fusion processors — that blend up to two Cortex-M55 MCU cores, up to two Cortex-A32 microprocessor (MPU) cores capable of running high-level operating systems, and up to two Arm Ethos™-U55 microNPUs for AI/ML acceleration
 
 
-> For this moment the demo is using precompiled examples. To get the source code of the examples please contact [AlifSemiconductor](https://www.alifsemi.com/). Once the source code will be available for the public the demo will be updated with detailed instruction of getting the code and building the project.
+This demo is intended to show how to speed-up the process of the embedded firmware development by using automation for the firmware testing on cloud hardware.
 
-## Getting the CI Access
+Here we'll run a simple echo application on a single Cortex-M55 core of Ensemble DevKit-E7 development board using GitHub Actions and REST requests wrapped with the shell scripts. Using this guide you can also run your firmware on any other supported [board](https://all-hw.com/app/index.html#/hardware).
 
-Please visit the All-Hardware's [board selector page](https://all-hw.com/app/#/hardware) and choose Ensemble DevKit board, then press "Get CI/CD access" button.
+
+> For the time being this demo is using precompiled examples. To get the source code of the examples please contact [AlifSemiconductor](https://www.alifsemi.com/). Once the source code is available to the public this demo will be updated with detailed instructions for getting the code and building the project.
+
+## Getting the CI/CD Access
+
+Please visit All-Hardware's [board selector page](https://all-hw.com/app/#/hardware) and choose the Ensemble DevKit board, then press "Get CI/CD access" button.
 
 ![board selection](https://github.com/all-hw/ci-demo/raw/main/docs/book_the_board.png)
 
-You will get an API key which you'll need later to access the board. For the demo we'll use the *ba1e491b-331b-4e35-b799-f714b8505843*.
+You will get an API key which you'll need later to access the board. For this demo we'll use the key **ba1e491b-331b-4e35-b799-f714b8505843**.
 
 ## Quick Look at the Demo Content
 
@@ -28,16 +28,16 @@ The [DEMO project](https://github.com/all-hw/ci-demo.git) contains:
 
 * UART echo example application
 * TFLite microspeech example application
-* scripts to upload firmware binary to the All-Hardware service
+* Scripts to upload firmware binaries to the All-Hardware service
 * GitHub CI workflow configuration
 
 Ok, great! Let's flash our simple applications to the cloud hardware.
 
 ## Flash MCU with GitHub CI
 
-With GitHub Actions you can easily build your CI workflow and [All-Hardware](https://all-hw.com/) service will let you to do it for your embeded development process!
+With GitHub Actions you can easily build your CI workflow and the [All-Hardware](https://all-hw.com/) service will support your embedded development process!
 
-Open [demo GitHub page](https://github.com/all-hw/ci-demo) and fork the repository:
+Open the [demo GitHub page](https://github.com/all-hw/ci-demo) and fork the repository:
 
 ![fork|690x313](https://github.com/all-hw/ci-demo/raw/main/docs/fork.png)
 
@@ -59,7 +59,7 @@ on:
   workflow_dispatch:
     inputs:
       binary:
-        description: 'Firmware binary to flash the MCU'
+        description: 'Firmware binary to flash to the MCU'
         default: 'bin/HelloW.axf'
         required: true
 
@@ -109,7 +109,7 @@ jobs:
       run: echo "${{ steps.task.outputs.result-code }}"
 ```
 
-Firmware upload done by [All-Hardware GitHub Actions](https://github.com/all-hw/uart-task) and you can easily integrate it into your own CI workflow.
+Firmware upload is done by [All-Hardware GitHub Actions](https://github.com/all-hw/uart-task). You can easily integrate this into your own CI workflow.
 
 ## Flash MCU with REST API
 
@@ -122,27 +122,28 @@ Clone the demo from Github repository:
 git clone https://github.com/all-hw/ci-demo.git
 ```
 
-Modify _$API_KEY_ variable in the file _scripts/ci_sampe.sh_ to the API key you've got during booking the board.
+Modify the _$API_KEY_ variable in the file _scripts/ci_sampe.sh_ to the API key you received when booking the board.
 
 ### Echo Application
 
-Run following command to upload the Echo example to the All-Hardware remote board:
+Run the following command to upload the Echo example to the All-Hardware remote board:
 
 ```bash
 ./scripts/ci_sample.sh task bin/HelloW.axf test_data/uart_input.txt
 ```
 
-We are flashing the firmware binary from *bin/HelloW.axf* file and passing content of the _test_data/uart_input.txt_ file to the microcontroller's uart input. Here is the example output:
+This will flash the firmware binary from **bin/HelloW.axf** and pass the content of _test_data/uart_input.txt_ to the microcontroller's UART input. Here is the example output:
 
 `7b00ab0c-8566-46ae-ada8-45bc2bdc81d4`
 
-It is a task UUID, you can use it to get the status of the operation:
+This is a task UUID, you can use it to get the status of the operation:
 
 ```bash
 ./scripts/ci_sample.sh status 7b00ab0c-8566-46ae-ada8-45bc2bdc81d4
 ```
 
-The result should be following:
+The response should look like:
+
 ```text
 Status: finished
 Exit code: 156
@@ -158,7 +159,7 @@ Hello World!!!
 
 ### Microspeech Application
 
-Microspeech source code available on the [Alif's GitHub page](https://github.com/arashed-alif/VHT-TFLmicrospeech). You can get the source code using following commands:
+Microspeech source code is available on [Alif's GitHub page](https://github.com/arashed-alif/VHT-TFLmicrospeech). You can get the source code using the following commands:
 
 ```text
 git clone https://github.com/arashed-alif/VHT-TFLmicrospeech
@@ -166,7 +167,7 @@ cd VHT-TFLmicrospeech
 git checkout Platform_Alif_Ensemble
 ```
 
-We already built the example so you can just run it on remote hardware. Make sure you've set API_KEY variable as described into previous example, then run following command:
+We already built the example so you can just run it on remote hardware without compiling from source yourself. Make sure you've set the API_KEY variable as described in the previous example, then run following command:
 
 ```bash
 ./scripts/ci_sample.sh task bin/microspeech.axf test_data/empty.txt
@@ -177,7 +178,7 @@ Then request the status of the operation:
 ./scripts/ci_sample.sh status b2dc9f02-5829-11ec-bf2c-67fc59cf5b2a
 ```
 
-And the expected output is following:
+The response should look like:
 
 ```text
 Executing bin/microspeech.axf on https://cloud.all-hw.com/ci with timeout 10s
@@ -199,29 +200,30 @@ Heard no (141) @6100ms
 
 ### Flashing the Firmware
 
-To flash the device you'll need to POST to `https://cloud.all-hw.com/ci/usertask?version=V3&rate=115200&log=0&timeout=10&key=<your_api_key>` following JSON:
+To flash the device, you'll need to POST the following JSON
 ```json
 {
   "firmware": "......", <-- your firmware here
   "input": "........" <-- input data to send to UART
 }
 ```
+to `https://cloud.all-hw.com/ci/usertask?version=V3&rate=115200&log=0&timeout=10&key=<your_api_key>`.
 
-As a response you'll get the uuid of the created task.
+As a response you'll get the UUID of the created task.
 
 
 ### Getting the Operation Status
 
 GET https://cloud.all-hw.com/ci/usertask?id=<task_id>
 
-The response to the task status request has JSON type, which fields are described in the table below.
+The response to the task status request is a JSON. The fields are described in the table below.
 
 |Field name|Type|Comment|
 | --- | --- | --- |
-|status| String|queued – the task is registered on the CI server, but has not been started yet for some reason (for example, there are no free boards); running – the task script started on the terminal, but has not finished yet; finished – the task has terminated on the terminal, or an error has occurred that does not allow the script to run on the terminal|
-|created|Date/time| the time when the task was registered on the CI server|
-|started|Date/time|the time when the task started on the terminal, or an error preventing it from running has been found|
-|finished|Date/time|the time when the task completed its work on the terminal, or an error preventing it from running has been found|
-|code|Int|the return code of the task; null if the status is not finished. 255 if the task could not be started normally on the terminal|
-|output|String|the current output of the task. It can be null if the status is not finished. The final output of the task if the status is finished|
-|reservation|Int|the reservation ID on the All-HW server. It can be useful for diagnosing some problems with the task. For example, you can use it to find out which specific board from the group was booked to complete the task|
+|status| String | <ul><li>_queued_ – The task is registered on the CI server, but has not been started yet for some reason (for example, there are no free boards).</li>       <li>_running_ – The task script has started on the terminal, but has not finished yet.</li>          <li>_finished_ – The task has terminated on the terminal, or an error has occurred that does not allow the script to run on the terminal.</li></ul>|
+|created|Date/time| The time when the task was registered on the CI server.|
+|started|Date/time| The time when the task started on the terminal, or an error preventing it from running was encountered.|
+|finished|Date/time| The time when the task has completed its work on the terminal, or an error preventing it from running was encountered.|
+|code|Int| The return code of the task: <ul><li>_null_ - The task is not finished.</li> <li>_255_ - The task could not be started normally on the terminal.</li></ul>|
+|output|String| The output of the task: <ul><li>It will be null if the status field is not finished.</li> <li>It will be the final output of the task if the status field is finished.</li></ul>|
+|reservation|Int| The reservation ID on the All-HW server. This can be useful for diagnosing some problems with the task. For example, you can use it to find out which specific board from the group was booked to complete the task.|
