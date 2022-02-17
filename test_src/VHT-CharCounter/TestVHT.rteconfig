@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<configuration xmlns:xs="http://www.w3.org/2001/XMLSchema-instance">
+  <packages/>
+  <device Dclock="32000000" Dcore="Cortex-M55" DcoreVersion="r0p0" Ddsp="DSP" Dendian="Little-endian" Dfpu="DP_FPU" Dmpu="MPU" Dmve="FP_MVE" Dname="SSE-300-MPS3" Dsecure="2" Dtz="TZ" Dvendor="ARM:82">
+    <package info="ARM V2M-MPS3 Board Support PACK for CoreLink SSE-300 - TrustZone enabled subsystem for embedded." name="V2M_MPS3_SSE_300_BSP" url="http://www.keil.com/pack/" vendor="ARM" version="1.2.0"/>
+  </device>
+  <toolchain Tcompiler="ARMCC" Toptions="AC6" Toutput="exe"/>
+  <components>
+    <component Cclass="CMSIS" Cgroup="CORE" Cvendor="ARM" Cversion="5.5.0">
+      <package name="CMSIS" url="http://www.keil.com/pack/" vendor="ARM" version="5.8.0"/>
+      <file category="doc" name="CMSIS/Documentation/Core/html/index.html"/>
+      <file category="include" name="CMSIS/Core/Include/"/>
+      <file category="header" condition="TrustZone" name="CMSIS/Core/Include/tz_context.h"/>
+    </component>
+    <component Capiversion="2.2.0" Cclass="CMSIS Driver" Cgroup="USART" Cvendor="ARM" Cversion="1.0.0" deviceDependent="1">
+      <package name="V2M_MPS3_SSE_300_BSP" url="http://www.keil.com/pack/" vendor="ARM" version="1.2.0"/>
+      <file category="include" deviceDependent="1" name="CMSIS_Driver/Config/"/>
+      <file category="source" deviceDependent="1" name="CMSIS_Driver/Driver_USART.c"/>
+    </component>
+    <component Cbundle="ARM Compiler" Cbundleversion="1.6.3" Cclass="Compiler" Cgroup="I/O" Csub="STDOUT" Cvariant="User" Cvendor="Keil" Cversion="1.2.0">
+      <package name="ARM_Compiler" url="http://www.keil.com/pack/" vendor="Keil" version="1.6.3"/>
+      <file category="source" name="Source/retarget_io.c"/>
+      <file attr="template" category="source" name="Template/stdout_user.c" select="STDOUT User Template"/>
+      <file attr="template" category="source" name="Template/stdout_USART.c" select="STDOUT via USART"/>
+      <file attr="template" category="source" name="Template/stdout_display.c" select="STDOUT via Display"/>
+    </component>
+    <component Cclass="Device" Cgroup="Definition" Cvendor="ARM" Cversion="1.1.0" deviceDependent="1">
+      <package name="V2M_MPS3_SSE_300_BSP" url="http://www.keil.com/pack/" vendor="ARM" version="1.2.0"/>
+      <file category="include" deviceDependent="1" name="Device/Include/"/>
+      <file category="include" deviceDependent="1" name="Native_Driver/"/>
+      <file category="include" deviceDependent="1" name="CMSIS_Driver/Include/"/>
+      <file category="include" deviceDependent="1" name="Board/Platform/"/>
+      <file attr="config" category="header" deviceDependent="1" name="Board/Platform/platform_base_address.h" version="1.1.2"/>
+      <file category="header" deviceDependent="1" name="Board/Device_Definition/device_definition.h" version="1.1.1"/>
+      <file category="source" deviceDependent="1" name="Board/Device_Definition/device_definition.c" version="1.1.1"/>
+      <file attr="config" category="source" deviceDependent="1" name="Device/Source/system_SSE300MPS3.c" version="1.1.1"/>
+    </component>
+    <component Cclass="Device" Cgroup="Startup" Cvariant="Baremetal" Cvendor="ARM" Cversion="1.1.0" deviceDependent="1">
+      <package name="V2M_MPS3_SSE_300_BSP" url="http://www.keil.com/pack/" vendor="ARM" version="1.2.0"/>
+      <file attr="config" category="header" deviceDependent="1" name="Device/Include/region_defs.h" version="1.0.0"/>
+      <file attr="config" category="header" deviceDependent="1" name="Device/Include/region_limits.h" version="1.0.0"/>
+      <file attr="config" category="linkerScript" deviceDependent="1" name="Device/Source/armclang/fvp_sse300_mps3_s.sct" version="1.1.0"/>
+      <file attr="config" category="source" deviceDependent="1" name="Device/Source/startup_fvp_sse300_mps3.c" version="1.1.1"/>
+      <file attr="config" category="header" deviceDependent="1" name="Device/Config/Baremetal/device_cfg.h" version="1.1.2"/>
+      <file attr="config" category="header" deviceDependent="1" name="CMSIS_Driver/Config/Baremetal/cmsis_driver_config.h" version="1.1.1"/>
+      <file attr="config" category="header" deviceDependent="1" name="CMSIS_Driver/Config/RTE_Device.h" version="1.1.0"/>
+    </component>
+    <component Cclass="Native Driver" Cgroup="UART" Cvendor="ARM" Cversion="1.0.0" deviceDependent="1">
+      <package name="V2M_MPS3_SSE_300_BSP" url="http://www.keil.com/pack/" vendor="ARM" version="1.2.0"/>
+      <file category="source" deviceDependent="1" name="Native_Driver/uart_cmsdk_drv.c"/>
+      <file category="header" deviceDependent="1" name="Native_Driver/uart_cmsdk_drv.h"/>
+    </component>
+    <component Cclass="Test" Cgroup="Unity" Cvariant="Classic" Cvendor="Arm-Packs" Cversion="2.5.0">
+      <package name="Unity" url="https://github.com/MDK-Packs/Pack/raw/master/Unity/" vendor="Arm-Packs" version="1.0.0"/>
+      <file category="doc" name="docs/UnityAssertionsCheatSheetSuitableforPrintingandPossiblyFraming.pdf"/>
+      <file category="preIncludeLocal" name="rte/unity_preinclude.h"/>
+      <file category="header" name="src/unity.h"/>
+      <file category="source" name="src/unity.c"/>
+      <file category="header" name="extras/fixture/src/unity_fixture.h"/>
+      <file category="source" name="extras/fixture/src/unity_fixture.c"/>
+      <file category="header" name="extras/memory/src/unity_memory.h"/>
+      <file category="source" name="extras/memory/src/unity_memory.c"/>
+    </component>
+  </components>
+  <apis>
+    <api Capiversion="2.4.0" Cclass="CMSIS Driver" Cgroup="USART" Cvendor="ARM" Cversion="2.4.0" exclusive="0">
+      <package name="CMSIS" url="http://www.keil.com/pack/" vendor="ARM" version="5.8.0"/>
+      <file category="doc" name="CMSIS/Documentation/Driver/html/group__usart__interface__gr.html"/>
+      <file category="header" name="CMSIS/Driver/Include/Driver_USART.h"/>
+    </api>
+  </apis>
+</configuration>
