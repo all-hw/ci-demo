@@ -40,7 +40,7 @@ jobs:
         api-key: ${{ github.event.inputs.api_key }}
         timeout: ${{ github.event.inputs.timeout }}
         baudrate: 115200
-      timeout-minutes: 1
+      timeout-minutes: 2
 
     - name: Getting the Status
       run: echo "${{ steps.task.outputs.status }}"
