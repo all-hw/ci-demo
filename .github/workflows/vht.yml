@@ -46,7 +46,7 @@ jobs:
       with:
         binary: ./${{ github.event.inputs.binary }}
         uart-in: ./${{ github.event.inputs.file }}
-        vht-config: ${{ github.event.inputs.config }}
+        vht-config: ./${{ github.event.inputs.config }}
         api-key: ${{ github.event.inputs.api_key }}
         timeout: ${{ github.event.inputs.timeout }}
       timeout-minutes: 1
