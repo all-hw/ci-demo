@@ -1,4 +1,4 @@
-name: ALL-HW VHT CI
+name: ALL-HW VHT CI (Simple)
 
 on:
   # Manually triggered workflow
