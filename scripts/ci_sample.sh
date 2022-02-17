@@ -2,19 +2,16 @@
 
 # CI Server REST API URL
 REST=https://cloud.all-hw.com/ci
-API_KEY=ba1e491b-331b-4e35-b799-f714b8505843
+API_KEY=177aa96d-424f-40b2-817c-3034d38c87b6
 
 # User task timeout
-TIMEOUT=20
+TIMEOUT=60
 # Verbose output on REST API requests/responses: either "-v" or empty
 VERBOSE=
 
 P_2=$2
 P_3=$3
-
-if [[ "x$BAUDRATE" == "x" ]]; then
-    BAUDRATE=115200
-fi
+P_4=$4
 
 if [[ "x$LOG" == "x" ]]; then
     LOG=0
@@ -23,20 +20,20 @@ fi
 task_status() {
     LOG=$(mktemp /tmp/run.XXXX.log)
     curl -X GET $VERBOSE "$REST/usertask?id=$P_2" 2>/dev/null > $LOG
-
+    
     STATUS=`cat $LOG | jq -c -r .status`
 
     echo Status: $STATUS
     if [[ "x$STATUS" == "xfinished" ]]; then
         echo Exit code: `cat $LOG | jq -c -r .code`
-        echo UART output:
+        echo UART output: 
         cat $LOG | jq -c -r .output
     fi
     rm $LOG
 }
 
 create_task() {
-    curl -s -X POST -F firmware=@$P_2 -F input=@$P_3 $VERBOSE "$REST/usertask?version=V3&rate=$BAUDRATE&log=$LOG&timeout=$TIMEOUT&key=$API_KEY&core=M55_0"
+    curl -s -X POST -F firmware=@$P_2 -F input=@$P_3 -F config=@$P_4 $VERBOSE "$REST/usertask?version=V4&log=$LOG&timeout=$TIMEOUT&key=$API_KEY"
     echo
 }
 
