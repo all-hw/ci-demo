@@ -23,7 +23,7 @@ on:
         required: true
       timeout:
         description: 'Firmware task timeout'
-        default: '10'
+        default: '60'
         required: true
 
 jobs:
