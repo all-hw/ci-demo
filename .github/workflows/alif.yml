@@ -18,7 +18,7 @@ on:
         required: true
       timeout:
         description: 'Firmware task timeout before abort'
-        default: '80'
+        default: '10'
         required: true
 
 jobs:
