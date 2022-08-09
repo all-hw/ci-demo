@@ -167,7 +167,7 @@ cd VHT-TFLmicrospeech
 git checkout Platform_Alif_Ensemble
 ```
 
-We already built the example so you can just run it on remote hardware without compiling from source yourself. Make sure you've set the API_KEY variable as described in the previous example, then run following command:
+We already built the example so you can just run it on remote hardware without compiling from source by yourself. Make sure you've set the API_KEY variable as described in the previous example, then run following command in the _ci-demo_ folder:
 
 ```bash
 ./scripts/ci_sample.sh task bin/microspeech.axf test_data/empty.txt
